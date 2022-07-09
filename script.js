@@ -1,63 +1,49 @@
-const listElement = document.querySelector('.list')
-const inputElement = document.querySelector('.text-input')
-const buttonElement = document.querySelector(".add-btn")
-const tarefas = JSON.parse(localStorage.getItem('listTarefas')) || []
-
-buttonElement.setAttribute('onclick', 'addTarefa()')
-
+var listElement = document.querySelector('.list');
+var inputElement = document.querySelector('.text-input');
+var buttonElement = document.querySelector(".add-btn");
+var localStorageItem = localStorage.getItem('listTarefas');
+var localStorageParsed = JSON.parse(localStorageItem);
+var tarefas = localStorageParsed || [];
+buttonElement.setAttribute('onclick', 'addTarefa()');
 inputElement.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {  
-      addTarefa();
+    if (e.key === "Enter") {
+        addTarefa();
     }
-  });
-
+});
 function mostraTarefas() {
-    listElement.innerHTML = ''
-
-    for (item of tarefas) {
-        const itemList = document.createElement('div')
-        const itemP = document.createElement('p')
-        const itemText = document.createTextNode(item)
-
-        itemList.setAttribute('class', 'item')
-
-        const linkElement = document.createElement('button')
-    
-
-        const pos = tarefas.indexOf(item)
-        linkElement.setAttribute('class', 'close-icon fa fa-close')
-        linkElement.setAttribute('onclick', `removeTarefa(${pos})`)
-
-        itemP.appendChild(itemText)
-        itemList.appendChild(itemP)
-        itemList.appendChild(linkElement)
-        listElement.appendChild(itemList)
-        
+    listElement.innerHTML = '';
+    for (var _i = 0, tarefas_1 = tarefas; _i < tarefas_1.length; _i++) {
+        var item = tarefas_1[_i];
+        var itemList = document.createElement('div');
+        var itemP = document.createElement('p');
+        var itemText = document.createTextNode(item);
+        itemList.setAttribute('class', 'item');
+        var linkElement = document.createElement('button');
+        var pos = tarefas.indexOf(item);
+        linkElement.setAttribute('class', 'close-icon fa fa-close');
+        linkElement.setAttribute('onclick', "removeTarefa(".concat(pos, ")"));
+        itemP.appendChild(itemText);
+        itemList.appendChild(itemP);
+        itemList.appendChild(linkElement);
+        listElement.appendChild(itemList);
     }
-
 }
-
-mostraTarefas()
-
+mostraTarefas();
 function addTarefa() {
-    const tarefa = inputElement.value
-
+    var tarefa = inputElement.value;
     if (tarefa != '') {
-      tarefas.push(tarefa)
-      inputElement.value =''
-      mostraTarefas()
-      salvarNoLocalStorage()
+        tarefas.push(tarefa);
+        inputElement.value = '';
+        mostraTarefas();
+        salvarNoLocalStorage();
     }
-    
 }
-
 function removeTarefa(pos) {
-    tarefas.splice(pos, 1)
-    mostraTarefas()
-    salvarNoLocalStorage()
+    tarefas.splice(pos, 1);
+    mostraTarefas();
+    salvarNoLocalStorage();
 }
-
 function salvarNoLocalStorage() {
-    localStorage.setItem('listTarefas', JSON.stringify(tarefas))
+    localStorage.setItem('listTarefas', JSON.stringify(tarefas));
 }
-
+//# sourceMappingURL=script.js.map
